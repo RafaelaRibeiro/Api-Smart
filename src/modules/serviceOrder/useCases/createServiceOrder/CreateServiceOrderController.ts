@@ -4,7 +4,7 @@ import { CreateServiceOrderUseCase } from "./CreateServiceOrderUseCase";
 export class CreateServiceOrderController {
   async handle(request: Request, response: Response) {
     const { matricula, secretKey } = request.params;
-    const { convenio, nome, setorSolic, sexo, cpf, dtNasc, nomeMae, guia } =
+    const { convenio, nome, setorSolic, sexo, cpf, dtNasc, nomeMae } =
       request.body;
 
     const createServiceOrderUseCase = new CreateServiceOrderUseCase();
@@ -18,7 +18,6 @@ export class CreateServiceOrderController {
       nomeMae,
       matricula,
       secretKey,
-      guia,
     });
 
     return response.json(result);

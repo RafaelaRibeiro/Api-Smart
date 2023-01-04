@@ -11,7 +11,6 @@ interface ICreateServiceOrder {
   nomeMae: string;
   matricula: string;
   secretKey: string;
-  guia: string;
 }
 
 export class CreateServiceOrderUseCase {
@@ -25,8 +24,8 @@ export class CreateServiceOrderUseCase {
     nomeMae,
     matricula,
     secretKey,
-    guia,
-  }: ICreateServiceOrder) {
+  }: //guia,
+  ICreateServiceOrder) {
     const now = new Date();
     now.setHours(now.getHours() - 3);
     const checkSecretKey = await prisma.sTR.findFirstOrThrow({
@@ -61,7 +60,7 @@ export class CreateServiceOrderUseCase {
           OSM_DTHR: now,
           OSM_MCNV: matricula,
           OSM_CNV: convenio,
-          OSM_CTLE_CNV: guia,
+          //OSM_CTLE_CNV: guia,
           OSM_MREQ: 0,
           OSM_PROC: "A",
           OSM_STR: setorSolic,
@@ -116,7 +115,7 @@ export class CreateServiceOrderUseCase {
           OSM_DTHR: now,
           OSM_MCNV: matricula,
           OSM_CNV: convenio,
-          OSM_CTLE_CNV: guia,
+          //OSM_CTLE_CNV: guia,
           OSM_MREQ: 0,
           OSM_PROC: "A",
           OSM_STR: setorSolic,
@@ -171,7 +170,7 @@ export class CreateServiceOrderUseCase {
               OSM_NUM: cntOsmNew,
               OSM_DTHR: now,
               OSM_CNV: convenio,
-              OSM_CTLE_CNV: guia,
+              //OSM_CTLE_CNV: guia,
               OSM_MREQ: 0,
               OSM_PROC: "A",
               OSM_STR: setorSolic,
