@@ -1,0 +1,73 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Smart Documentation",
+    "description": "API do sistema Smart",
+    "version": "1.0.0",
+    "contact": {
+      "email": "rafaela.ribeiro@exatoconsultoria.com.br"
+    }
+  },
+
+  "paths": {
+    "/serviceorder/{token}/create/{matricula}": {
+      "post": {
+        "tags": ["Ordem.de serviço"],
+        "summary": "Criar ordem de serviço e paciente",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "description": "Token do cliente",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "matricula",
+            "in": "path",
+            "description": "Matricula do beneficiário",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "description": "Criar nova ordem de serviço",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": { "type": "string" },
+                  "sexo": { "type": "string" },
+                  "dtNasc": { "type": "date" },
+                  "nomeMae": { "type": "string" },
+                  "convenio": { "type": "string" },
+                  "setorSolic": { "type": "string" },
+                  "cpf": { "type": "string" }
+                },
+                "example": {
+                  "nome": "john James",
+                  "sexo": "M",
+                  "dtNasc": "1990-01-01",
+                  "nomeMae": "Maria James",
+                  "convenio": "1U",
+                  "setorSolic": "RCC",
+                  "cpf": "02345678901"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    }
+  }
+}
