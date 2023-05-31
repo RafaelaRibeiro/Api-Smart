@@ -1,8 +1,8 @@
 import { prisma } from "@/shared/infra/prisma/prisma";
-import moment from "moment-timezone";
 
 interface ICreateServiceOrder {
   setorSolic: string;
+  filaColeta: number;
   nome: string;
   convenio: string;
   dtNasc: Date;
@@ -18,17 +18,17 @@ export class CreateServiceOrderUseCase {
     nome,
     convenio,
     setorSolic,
+    filaColeta,
     sexo,
     cpf,
     dtNasc,
     nomeMae,
     matricula,
     secretKey,
-  }: //guia,
-  ICreateServiceOrder) {
+  }: ICreateServiceOrder) {
     const now = new Date();
     now.setHours(now.getHours() - 3);
-    const checkSecretKey = await prisma.sTR.findFirstOrThrow({
+    await prisma.sTR.findFirstOrThrow({
       where: {
         str_acesso_api: secretKey,
       },
@@ -60,7 +60,6 @@ export class CreateServiceOrderUseCase {
           OSM_DTHR: now,
           OSM_MCNV: matricula,
           OSM_CNV: convenio,
-          //OSM_CTLE_CNV: guia,
           OSM_MREQ: 0,
           OSM_PROC: "A",
           OSM_STR: setorSolic,
@@ -73,14 +72,14 @@ export class CreateServiceOrderUseCase {
           FLE: {
             create: {
               FLE_DTHR_CHEGADA: now,
-              FLE_PSV_COD: 294,
+              FLE_PSV_COD: filaColeta,
               FLE_STR_COD: setorSolic,
               FLE_PAC_REG: checkPatientPlate.PAC_REG,
               FLE_ORDEM: 1,
               FLE_STATUS: "A",
               FLE_USR_LOGIN: "IUC",
               FLE_OBS: "AUTO ATENDIMENTO",
-              FLE_PSV_RESP: 294,
+              FLE_PSV_RESP: filaColeta,
               FLE_DTHR_REG: now,
               FLE_PROCED: "TOT",
             },
@@ -99,14 +98,6 @@ export class CreateServiceOrderUseCase {
 
       return patient;
     } else if (checkPatientCPF) {
-      // const checkOsDay = await prisma.oSM.findFirst({
-      //   where: {
-      //     OSM_PAC: checkPatientCPF.PAC_REG,
-      //   },
-      // });
-
-      // if (checkOsDay) throw new Error("Já existe OS no dia");
-
       const patient = await prisma.oSM.create({
         data: {
           OSM_SERIE: Number(serie),
@@ -115,7 +106,6 @@ export class CreateServiceOrderUseCase {
           OSM_DTHR: now,
           OSM_MCNV: matricula,
           OSM_CNV: convenio,
-          //OSM_CTLE_CNV: guia,
           OSM_MREQ: 0,
           OSM_PROC: "A",
           OSM_STR: setorSolic,
@@ -128,14 +118,14 @@ export class CreateServiceOrderUseCase {
           FLE: {
             create: {
               FLE_DTHR_CHEGADA: now,
-              FLE_PSV_COD: 294,
+              FLE_PSV_COD: filaColeta,
               FLE_STR_COD: setorSolic,
               FLE_PAC_REG: checkPatientPlate.PAC_REG,
               FLE_ORDEM: 1,
               FLE_STATUS: "A",
               FLE_USR_LOGIN: "IUC",
               FLE_OBS: "AUTO ATENDIMENTO",
-              FLE_PSV_RESP: 294,
+              FLE_PSV_RESP: filaColeta,
               FLE_DTHR_REG: now,
               FLE_PROCED: "TOT",
             },
@@ -157,7 +147,7 @@ export class CreateServiceOrderUseCase {
       const patient = await prisma.pAC.create({
         data: {
           PAC_REG: cntPacNew,
-          PAC_NOME: nome,
+          PAC_NOME: nome.toUpperCase(),
           PAC_SEXO: sexo,
           PAC_CNV: convenio,
           PAC_DREG: now,
@@ -170,7 +160,6 @@ export class CreateServiceOrderUseCase {
               OSM_NUM: cntOsmNew,
               OSM_DTHR: now,
               OSM_CNV: convenio,
-              //OSM_CTLE_CNV: guia,
               OSM_MREQ: 0,
               OSM_PROC: "A",
               OSM_STR: setorSolic,
@@ -183,14 +172,14 @@ export class CreateServiceOrderUseCase {
               FLE: {
                 create: {
                   FLE_DTHR_CHEGADA: now,
-                  FLE_PSV_COD: 294,
+                  FLE_PSV_COD: filaColeta,
                   FLE_STR_COD: setorSolic,
                   FLE_PAC_REG: cntPacNew,
                   FLE_ORDEM: 1,
                   FLE_STATUS: "A",
                   FLE_USR_LOGIN: "IUC",
                   FLE_OBS: "AUTO ATENDIMENTO",
-                  FLE_PSV_RESP: 294,
+                  FLE_PSV_RESP: filaColeta,
                   FLE_DTHR_REG: now,
                   FLE_PROCED: "TOT",
                 },
