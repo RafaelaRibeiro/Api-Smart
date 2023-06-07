@@ -2,7 +2,7 @@ import { prisma } from "@/shared/infra/prisma/prisma";
 
 interface ICreateServiceOrder {
   setorSolic: string;
-  filaColeta: number;
+  filaColeta?: number;
   nome: string;
   convenio: string;
   dtNasc: Date;
@@ -72,14 +72,14 @@ export class CreateServiceOrderUseCase {
           FLE: {
             create: {
               FLE_DTHR_CHEGADA: now,
-              FLE_PSV_COD: filaColeta,
+              FLE_PSV_COD: filaColeta || 294,
               FLE_STR_COD: setorSolic,
               FLE_PAC_REG: checkPatientPlate.PAC_REG,
               FLE_ORDEM: 1,
               FLE_STATUS: "A",
               FLE_USR_LOGIN: "IUC",
               FLE_OBS: "AUTO ATENDIMENTO",
-              FLE_PSV_RESP: filaColeta,
+              FLE_PSV_RESP: filaColeta || 294,
               FLE_DTHR_REG: now,
               FLE_PROCED: "TOT",
             },
@@ -118,14 +118,14 @@ export class CreateServiceOrderUseCase {
           FLE: {
             create: {
               FLE_DTHR_CHEGADA: now,
-              FLE_PSV_COD: filaColeta,
+              FLE_PSV_COD: filaColeta || 294,
               FLE_STR_COD: setorSolic,
               FLE_PAC_REG: checkPatientPlate.PAC_REG,
               FLE_ORDEM: 1,
               FLE_STATUS: "A",
               FLE_USR_LOGIN: "IUC",
               FLE_OBS: "AUTO ATENDIMENTO",
-              FLE_PSV_RESP: filaColeta,
+              FLE_PSV_RESP: filaColeta || 294,
               FLE_DTHR_REG: now,
               FLE_PROCED: "TOT",
             },
@@ -160,6 +160,7 @@ export class CreateServiceOrderUseCase {
               OSM_NUM: cntOsmNew,
               OSM_DTHR: now,
               OSM_CNV: convenio,
+              OSM_MCNV: matricula,
               OSM_MREQ: 0,
               OSM_PROC: "A",
               OSM_STR: setorSolic,
@@ -172,14 +173,14 @@ export class CreateServiceOrderUseCase {
               FLE: {
                 create: {
                   FLE_DTHR_CHEGADA: now,
-                  FLE_PSV_COD: filaColeta,
+                  FLE_PSV_COD: filaColeta || 294,
                   FLE_STR_COD: setorSolic,
                   FLE_PAC_REG: cntPacNew,
                   FLE_ORDEM: 1,
                   FLE_STATUS: "A",
                   FLE_USR_LOGIN: "IUC",
                   FLE_OBS: "AUTO ATENDIMENTO",
-                  FLE_PSV_RESP: filaColeta,
+                  FLE_PSV_RESP: filaColeta || 294,
                   FLE_DTHR_REG: now,
                   FLE_PROCED: "TOT",
                 },
