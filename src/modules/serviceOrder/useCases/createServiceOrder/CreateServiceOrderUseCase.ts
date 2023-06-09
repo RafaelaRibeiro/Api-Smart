@@ -120,7 +120,7 @@ export class CreateServiceOrderUseCase {
               FLE_DTHR_CHEGADA: now,
               FLE_PSV_COD: filaColeta || 294,
               FLE_STR_COD: setorSolic,
-              FLE_PAC_REG: checkPatientPlate.PAC_REG,
+              FLE_PAC_REG: checkPatientCPF.PAC_REG,
               FLE_ORDEM: 1,
               FLE_STATUS: "A",
               FLE_USR_LOGIN: "IUC",
